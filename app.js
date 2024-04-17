@@ -69,21 +69,8 @@ copyButton.addEventListener("click", () => {
     document.execCommand("copy"); // Copy the text inside outputText to clipboard
 });
 
-function getData(endpoint) {
-    return new Promise((resolve, reject) => {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', endpoint, true);
-        xhr.onload = function() {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                var responseData = JSON.parse(xhr.responseText);
-                resolve(responseData);
-            } else {
-                reject('Request failed with status ' + xhr.status);
-            }
-        };
-        xhr.onerror = function() {
-            reject('Request failed');
-        };
-        xhr.send();
-    });
+async function getData(endpoint) {
+    const response = await fetch(endpoint);
+    const json = await response.json();
+    return json;
 }
