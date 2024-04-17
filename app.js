@@ -11,13 +11,12 @@ async function updateOutput() {
     try {
         const apiRes = await getData(inputValue);
 
-        if (apiRes && apiRes.data && apiRes.data[0] && apiRes.data[0]._id) {
+        if (apiRes && apiRes.data && apiRes.data[0]) {
 
             const stepsArray = apiRes.data[0].steps;
             const lastStepIndex = stepsArray.length - 1;
             const lastStep = stepsArray[lastStepIndex];
             const screenshot = `**Screenshot** \n${apiRes.data[0].screenshot.original.defaultUrl}`;
-
 
             if (lastStep && lastStep.extra && lastStep.extra.accessibility && lastStep.extra.accessibility.issues) {
                 const issues = lastStep.extra.accessibility.issues;
@@ -39,7 +38,6 @@ async function updateOutput() {
             } else {
                 console.log('Error: Issues array or its properties are undefined.');
             }
-
 
         } else {
             throw new Error("Invalid JSON format");
