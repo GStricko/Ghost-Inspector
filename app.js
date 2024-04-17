@@ -16,7 +16,7 @@ function updateOutput() {
             const stepsArray = jsonData.data[0].steps;
             const lastStepIndex = stepsArray.length - 1;
             const lastStep = stepsArray[lastStepIndex];
-            const screenshot = `**Screenshot** \n\n${jsonData.data[0].screenshot.original.defaultUrl}`;
+            const screenshot = `**Screenshot** \n${jsonData.data[0].screenshot.original.defaultUrl}`;
 
 
             if (lastStep && lastStep.extra && lastStep.extra.accessibility && lastStep.extra.accessibility.issues) {
