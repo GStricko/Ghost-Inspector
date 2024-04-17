@@ -70,7 +70,17 @@ copyButton.addEventListener("click", () => {
 });
 
 async function getData(endpoint) {
-    const response = await fetch(endpoint);
-    const json = await response.json();
-    return json;
+    try {
+        const response = await fetch(endpoint);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const json = await response.json();
+        console.log(json);
+        return json;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Optionally rethrow the error
+    }
 }
+
