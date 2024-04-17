@@ -25,7 +25,7 @@ function updateOutput() {
            
                 for (const issue of issues) {
                     if (issue.help && issue.helpUrl) {
-                        let nodesOutput = `**Issues to fix**\n\n**Class name:** `;
+                        let nodesOutput = `Class name:** `;
                         if (issue.nodes.length > 0) {
                             nodesOutput += issue.nodes.map(node => `\n  - [ ] ${node}`).join('');
                         }
@@ -35,7 +35,7 @@ function updateOutput() {
                 }
                 output += screenshot;
 
-                return (output);
+                return (`**Issues to fix**\n\n${output}`);
             } else {
                 console.log('Error: Issues array or its properties are undefined.');
             }
