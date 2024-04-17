@@ -25,11 +25,11 @@ function updateOutput() {
            
                 for (const issue of issues) {
                     if (issue.help && issue.helpUrl) {
-                        let nodesOutput = "Class name: ";
+                        let nodesOutput = `**Issues to fix**\n\n**Class name:** `;
                         if (issue.nodes.length > 0) {
                             nodesOutput += issue.nodes.map(node => `\n  - [ ] ${node}`).join('');
                         }
-                        const formattedIssue = `${nodesOutput}\nError: ${issue.help}\nDeque University link: ${issue.helpUrl}\n\n`;
+                        const formattedIssue = `${nodesOutput}\n**Error:** ${issue.help}\n**Deque University link:** ${issue.helpUrl}\n\n`;
                         output += formattedIssue;
                     }
                 }
