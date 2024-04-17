@@ -25,7 +25,7 @@ function updateOutput() {
            
                 for (const issue of issues) {
                     if (issue.help && issue.helpUrl) {
-                        let nodesOutput = `Class name:** `;
+                        let nodesOutput = `**Class name:** `;
                         if (issue.nodes.length > 0) {
                             nodesOutput += issue.nodes.map(node => `\n  - [ ] ${node}`).join('');
                         }
