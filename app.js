@@ -5,18 +5,18 @@ const clearInputButton = document.getElementById("clearInputButton");
 const clearOutputButton = document.getElementById("clearOutputButton");
 const copyButton = document.getElementById("copyButton");
 
-function updateOutput() {
+async function updateOutput() {
     const inputValue = inputText.value.trim();
-
+    
     try {
-        const jsonData = JSON.parse(inputValue);
+        const apiRes = await getData(inputValue);
 
-        if (jsonData && jsonData.data && jsonData.data[0] && jsonData.data[0]._id) {
+        if (apiRes && apiRes.data && apiRes.data[0] && apiRes.data[0]._id) {
 
-            const stepsArray = jsonData.data[0].steps;
+            const stepsArray = apiRes.data[0].steps;
             const lastStepIndex = stepsArray.length - 1;
             const lastStep = stepsArray[lastStepIndex];
-            const screenshot = `**Screenshot** \n${jsonData.data[0].screenshot.original.defaultUrl}`;
+            const screenshot = `**Screenshot** \n${apiRes.data[0].screenshot.original.defaultUrl}`;
 
 
             if (lastStep && lastStep.extra && lastStep.extra.accessibility && lastStep.extra.accessibility.issues) {
@@ -50,11 +50,9 @@ function updateOutput() {
     }
 }
 
-button.addEventListener("click", () => {
-    const res = updateOutput();
-        outputText.textContent = res;
-
-
+button.addEventListener("click", async () => {
+    const res = await updateOutput();
+    outputText.textContent = res;
 });
 
 
@@ -70,3 +68,22 @@ copyButton.addEventListener("click", () => {
     outputText.select();
     document.execCommand("copy"); // Copy the text inside outputText to clipboard
 });
+
+function getData(endpoint) {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', endpoint, true);
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                var responseData = JSON.parse(xhr.responseText);
+                resolve(responseData);
+            } else {
+                reject('Request failed with status ' + xhr.status);
+            }
+        };
+        xhr.onerror = function() {
+            reject('Request failed');
+        };
+        xhr.send();
+    });
+}
